@@ -54,19 +54,36 @@ export const experience = [
   },
 ]
 
-export const project = {
-  name: 'TableTalk',
-  strap: 'Natural language to SQL, made safe to run',
-  stack: ['Java 21', 'Spring Boot 3', 'React', 'TypeScript'],
-  summary:
-    'A tool-calling LLM agent retrieves the database schema and generates SQL. Three guard layers make the result safe to execute against a live database.',
-  guards: [
-    { name: 'AST guard', detail: 'JSqlParser parses every generated statement before it runs' },
-    { name: 'Read-only transaction', detail: 'Queries execute inside a read-only transaction' },
-    { name: 'Statement timeout', detail: 'A hard timeout bounds every execution' },
-  ],
-  github: 'https://github.com/pratikgurjar/TableTalk',
-}
+// Each project renders as one card. `points` are the three ideas the card
+// leads with, shown as the boxed row.
+export const projects = [
+  {
+    name: 'TableTalk',
+    strap: 'Natural language to SQL, made safe to run',
+    stack: ['Java 21', 'Spring Boot 3', 'React', 'TypeScript'],
+    summary:
+      'A tool-calling LLM agent retrieves the database schema and generates SQL. Three guard layers make the result safe to execute against a live database.',
+    points: [
+      { name: 'AST guard', detail: 'JSqlParser parses every generated statement before it runs' },
+      { name: 'Read-only transaction', detail: 'Queries execute inside a read-only transaction' },
+      { name: 'Statement timeout', detail: 'A hard timeout bounds every execution' },
+    ],
+    github: 'https://github.com/pratikgurjar/TableTalk',
+  },
+  {
+    name: 'Switchboard',
+    strap: 'Never pay the expensive model for a cheap question',
+    stack: ['Go', 'React', 'SQLite', 'Prometheus'],
+    summary:
+      'An OpenAI-compatible gateway that scores each prompt and routes it to the cheapest model tier that can answer it. Benchmark workloads run 35% below a single-model baseline, and every token is accounted for.',
+    points: [
+      { name: 'Complexity routing', detail: 'Weighted signals score each prompt and pick a tier' },
+      { name: 'Confidence escalation', detail: 'A hedged cheap answer re-runs on the premium model' },
+      { name: 'Budget caps', detail: 'Per-key spend pressure downgrades routing before the cap' },
+    ],
+    github: 'https://github.com/pratikgurjar/switchboard',
+  },
+]
 
 // Chips link to the official home or primary docs. Links verified 1 Aug 2026.
 // Plain-concept skills (no canonical site) stay unlinked on purpose.

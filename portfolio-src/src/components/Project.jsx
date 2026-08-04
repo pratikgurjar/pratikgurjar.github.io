@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { project } from '../data.js'
+import { projects } from '../data.js'
 import { useReveal, useCardFx, prefersReducedMotion } from '../hooks.js'
 
 // Background terminal that demonstrates TableTalk's guard live. Twenty scenes
@@ -190,51 +190,60 @@ function SqlBackdrop() {
   )
 }
 
+function ProjectCard({ p }) {
+  const fx = useCardFx(2.2)
+  return (
+    <div className="project-card glow-card rv" {...fx}>
+      <div className="project-top">
+        <h3 className="project-name">{p.name}</h3>
+        <p className="project-strap">{p.strap}</p>
+      </div>
+      <p className="project-summary">{p.summary}</p>
+      <div className="guards">
+        {p.points.map((g) => (
+          <div className="guard" key={g.name}>
+            <p className="guard-name">{g.name}</p>
+            <p className="guard-detail">{g.detail}</p>
+          </div>
+        ))}
+      </div>
+      <div className="project-foot">
+        <div className="chips">
+          {p.stack.map((t) => (
+            <span className="chip" key={t}>
+              {t}
+            </span>
+          ))}
+        </div>
+        {p.github && (
+          <a
+            className="btn btn-ghost project-link"
+            href={p.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View on GitHub
+          </a>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function Project() {
   const ref = useReveal()
-  const fx = useCardFx(2.2)
   return (
     <section className="section project-section" id="project" ref={ref}>
       <SqlBackdrop />
       <div className="section-head rv">
         <p className="section-eyebrow">
-          03 · Project <span className="stamp">AUTHENTICATE</span>
+          03 · Projects <span className="stamp">AUTHENTICATE</span>
         </p>
-        <h2 className="section-title">TableTalk</h2>
+        <h2 className="section-title">Things I built</h2>
       </div>
-      <div className="project-card glow-card rv" {...fx}>
-        <div className="project-top">
-          <p className="project-strap">{project.strap}</p>
-        </div>
-        <p className="project-summary">{project.summary}</p>
-        <div className="guards">
-          {project.guards.map((g) => (
-            <div className="guard" key={g.name}>
-              <p className="guard-name">{g.name}</p>
-              <p className="guard-detail">{g.detail}</p>
-            </div>
-          ))}
-        </div>
-        <div className="project-foot">
-          <div className="chips">
-            {project.stack.map((t) => (
-              <span className="chip" key={t}>
-                {t}
-              </span>
-            ))}
-          </div>
-          {project.github && (
-            <a
-              className="btn btn-ghost project-link"
-              href={project.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View on GitHub
-            </a>
-          )}
-        </div>
-      </div>
+      {projects.map((p) => (
+        <ProjectCard p={p} key={p.name} />
+      ))}
     </section>
   )
 }
