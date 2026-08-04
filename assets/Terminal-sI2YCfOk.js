@@ -1,4 +1,4 @@
-import{r,j as t,t as x,p as w,i as n,s as v}from"./index-Bd1gNHzu.js";const j=`available commands:
+import{r,j as t,t as x,p as w,i as n,s as v}from"./index-Didmp6sh.js";const j=`available commands:
   whoami      who is this
   skills      what I work with
   ai          the applied-AI side

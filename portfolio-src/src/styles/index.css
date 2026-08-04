@@ -511,7 +511,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .project-card:hover { border-color: var(--line-bright); }
 .project-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 16px; margin-bottom: 8px; }
-.project-name { font-family: var(--display); font-size: clamp(24px, 3.4vw, 32px); font-weight: 700; letter-spacing: -0.02em; }
+.project-name { font-family: var(--display); font-size: clamp(21px, 2.6vw, 26px); font-weight: 700; letter-spacing: -0.02em; }
+.project-card + .project-card { margin-top: 18px; }
 .project-strap { font-size: 15px; color: var(--accent-bright); }
 .project-summary { max-width: 620px; color: var(--text-2); font-size: 15px; margin: 10px 0 22px; }
 .guards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 22px; }
