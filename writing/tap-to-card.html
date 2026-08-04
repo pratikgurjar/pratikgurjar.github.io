@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What happens in the three seconds after you tap a card · Pratik Gurjar</title>
+    <meta
+      name="description"
+      content="A payments engineer walks through the full life of a contactless card payment: EMV, ISO 8583, routing, authorization, clearing and settlement, in plain language."
+    />
+    <link rel="canonical" href="https://pratikgurjar.github.io/writing/tap-to-card.html" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="What happens in the three seconds after you tap a card" />
+    <meta property="og:description" content="The full life of a contactless payment: EMV, ISO 8583, routing, authorization, clearing and settlement, in plain language." />
+    <meta property="og:url" content="https://pratikgurjar.github.io/writing/tap-to-card.html" />
+    <meta property="og:image" content="https://pratikgurjar.github.io/og.png" />
+    <style>
+      @font-face {
+        font-family: 'Space Grotesk';
+        src: url('/fonts/space-grotesk-latin-var.woff2') format('woff2');
+        font-weight: 300 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Inter';
+        src: url('/fonts/inter-latin-var.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        src: url('/fonts/jetbrains-mono-latin-var.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: swap;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: #0a0a0f;
+        color: #dcdce3;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 16.5px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 700px; margin: 0 auto; padding: 48px 22px 80px; }
+      .crumb {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        color: #a2a2ad;
+        margin-bottom: 40px;
+        display: inline-block;
+        text-decoration: none;
+      }
+      .crumb:hover { color: #f2f2f5; }
+      .eyebrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8b87f7;
+        margin-bottom: 14px;
+      }
+      h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(30px, 6vw, 44px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        color: #f2f2f5;
+        margin-bottom: 16px;
+      }
+      .meta { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #a2a2ad; margin-bottom: 44px; }
+      h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 23px;
+        font-weight: 600;
+        color: #f2f2f5;
+        margin: 44px 0 14px;
+      }
+      h2 .tag {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: #8b87f7;
+        border: 1px solid rgba(139, 135, 247, 0.45);
+        border-radius: 4px;
+        padding: 2px 8px;
+        vertical-align: 4px;
+        margin-left: 10px;
+        font-weight: 400;
+      }
+      p { margin-bottom: 18px; }
+      strong { color: #f2f2f5; font-weight: 600; }
+      code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.86em;
+        background: #16161e;
+        border: 1px solid #23232d;
+        border-radius: 5px;
+        padding: 1px 6px;
+        color: #b9b6f9;
+      }
+      .rails {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        color: #a2a2ad;
+        background: #121218;
+        border: 1px solid #23232d;
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin: 26px 0;
+        overflow-x: auto;
+        white-space: pre;
+        line-height: 1.9;
+      }
+      .note {
+        border-left: 2px solid rgba(139, 135, 247, 0.5);
+        padding: 4px 0 4px 18px;
+        color: #bcbcc6;
+        margin: 24px 0;
+        font-size: 15.5px;
+      }
+      .footer-nav { margin-top: 60px; padding-top: 24px; border-top: 1px solid #23232d; }
+      .footer-nav a {
+        color: #f2f2f5;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13.5px;
+        text-decoration: none;
+        border: 1px solid #34343f;
+        border-radius: 10px;
+        padding: 11px 20px;
+        display: inline-block;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      .footer-nav a:hover { border-color: #8b87f7; background: rgba(91, 84, 232, 0.14); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="crumb" href="/#writing">← pratikgurjar.github.io / writing</a>
+      <p class="eyebrow">Payments, from the metal up</p>
+      <h1>What happens in the three seconds after you tap a card</h1>
+      <p class="meta">Pratik Gurjar · payments infrastructure engineer · August 2026 · 8 min read</p>
+
+      <p>
+        You tap. The terminal beeps. Somewhere a kitchen starts making your order. The whole thing felt instant, but in
+        those three seconds your card and about half a dozen computer systems in different companies, sometimes
+        different countries, held a very fast, very formal conversation. I work on some of these systems for a living.
+        This is that conversation, in order.
+      </p>
+
+      <div class="rails">tap → terminal → acquirer → network → issuer
+INITIATE · AUTHENTICATE · ROUTE · AUTHORIZE
+        then, later and unseen: CAPTURE · CLEAR · SETTLED</div>
+
+      <h2>The tap itself<span class="tag">INITIATE</span></h2>
+      <p>
+        A contactless card has no battery. The terminal's NFC field powers a tiny chip on the card, and the two begin
+        exchanging small binary messages defined by the EMV contactless specifications. The terminal asks what the card
+        can do, the card answers with its capabilities, and then the important part happens: the card
+        <strong>signs the transaction</strong>. Using a secret key that was burned into the chip when it was made, the
+        card computes a cryptogram over the amount, the currency, a counter and an unpredictable number the terminal
+        supplied. This cryptogram is the reason a tap is not just "reading the card number". The number alone is almost
+        useless. The proof that the real chip was present for this exact amount at this exact moment is everything.
+      </p>
+      <p>
+        The terminal also runs its own quick risk checks. This is where the no-PIN experience comes from: below a
+        limit set by the regulator and the issuer (in India, small contactless payments skip the PIN), the terminal
+        decides the tap alone is enough. Above it, you get the PIN prompt.
+      </p>
+
+      <h2>Becoming a message<span class="tag">AUTHENTICATE</span></h2>
+      <p>
+        Everything the terminal learned is now packed into an <strong>ISO 8583</strong> message, a format from 1987
+        that still carries most of the world's card traffic. It is a strange and wonderful thing: a bitmap declares
+        which of 128 numbered fields are present, then the fields follow, each with its own encoding rules. Field 2
+        carries the card number, field 4 the amount, field 55 the EMV cryptogram and its companions. The message type
+        for "please authorize this" is <code>0100</code>. When people who work in payments dream badly, they dream in
+        field numbers.
+      </p>
+      <p>
+        One important modern twist: field 2 often does not contain your real card number anymore. If your card is
+        tokenized, a stand-in number travels instead, and only the token service can map it back. A database
+        breach at a merchant leaks tokens, not cards. This is one of the quietest, most effective security upgrades
+        payments has ever shipped.
+      </p>
+
+      <h2>Finding the issuer<span class="tag">ROUTE</span></h2>
+      <p>
+        The merchant's acquirer receives the <code>0100</code> and has to deliver it to whichever bank issued your
+        card. The first six to eight digits of the card number, the <strong>BIN</strong>, identify the issuer, and BIN
+        tables tell the acquirer which network to hand the message to. The network, the rails in the middle, routes it
+        onward to the issuing bank. If the card was tokenized, the network's token service swaps the token for the
+        real number on the way through. All of this happens in tens of milliseconds, and all of it is invisible until
+        a BIN table goes stale somewhere and a perfectly good card starts getting declined at one particular shop.
+        Routing bugs are humbling that way: nothing is down, and yet money does not move.
+      </p>
+
+      <h2>The decision<span class="tag">AUTHORIZE</span></h2>
+      <p>
+        The issuer now has milliseconds to answer one question: is this real, and can this person pay? It validates
+        the cryptogram against hardware security modules that hold the card keys. It checks the card is active and not
+        reported lost. It checks the balance or the credit limit. It runs fraud models: is this amount, at this
+        merchant, in this city, at this hour, consistent with this card's life? Each check is fast. The discipline is
+        keeping all of them fast together, every time, because the terminal, the acquirer and the network each have
+        timeouts, and a slow answer is treated as no answer.
+      </p>
+      <p>
+        The verdict travels back as an <code>0110</code> response with a two-digit code. <code>00</code> means
+        approved. Everything else is a flavor of no, and matching those flavors to what a cardholder actually sees on
+        the screen is its own small field of engineering. If the issuer is unreachable, the network can sometimes
+        <strong>stand in</strong> and answer on its behalf within agreed limits, which is why your card occasionally
+        works even while your bank's app is down.
+      </p>
+
+      <h2>The part nobody sees<span class="tag">CAPTURE · CLEAR</span></h2>
+      <p>
+        Here is the thing that surprises people: <strong>no money moved yet</strong>. An approval is a promise, a hold
+        against your limit. The movement starts later. The merchant's system captures the approved transaction,
+        usually in an end-of-day batch, and the acquirer submits clearing records through the network. Clearing is
+        where the amounts are finalized, currency conversion happens if it must, and the network calculates
+        interchange, the fee that flows between the banks. Your tap has stopped being an event and become a row, one
+        of millions, in files that banks exchange on a schedule.
+      </p>
+
+      <h2>Money, finally<span class="tag">SETTLED</span></h2>
+      <p>
+        Settlement is the anticlimax the whole system exists for. On a schedule, typically the next working day, the
+        network nets out what every bank owes every other bank, and a small number of large transfers replace millions
+        of small ones. The merchant is paid by the acquirer, minus fees. Your issuer turns the hold into a real debit.
+        And a reconciliation process, the least glamorous and most load-bearing job in payments, checks that what the
+        terminal saw, what the acquirer processed and what the network settled are the same set of transactions down
+        to the last one. When they are not, a human gets paged. Sometimes that human was me.
+      </p>
+
+      <h2>Why this design has lasted</h2>
+      <p>
+        The architecture is old and looks it. It is also quietly brilliant. Authorization is separated from money
+        movement, so the fast path stays fast and the money path stays careful. Cryptography lives in the chip, so
+        stolen numbers age badly. Every party trusts the message, not the other party's honesty. And the whole thing
+        degrades gracefully: issuers go down, stand-in catches; networks slow, timeouts and reversals clean up; a
+        batch fails, reconciliation finds it. The three seconds you experienced were the demo. The system's real work
+        is making sure the following twenty-four hours agree with it.
+      </p>
+
+      <p class="note">
+        One ordering note, because it trips people up. At a terminal the card authenticates itself the instant you
+        tap, before anything is routed anywhere. Online there is no chip in the room, so authentication happens after
+        the gateway is chosen, as a 3-D Secure challenge, and only then does the authorization request go out. Same
+        seven steps, two different places where the cardholder proves who they are.
+      </p>
+
+      <p class="note">
+        The site this article lives on tells the same story: scroll the home page and a pulse travels INITIATE to
+        SETTLED down the left rail. This piece is what the pulse is doing.
+      </p>
+
+      <div class="footer-nav">
+        <a href="/#writing">← Back to the site</a>
+      </div>
+    </div>
+  </body>
+</html>

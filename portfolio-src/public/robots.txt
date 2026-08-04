@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pratikgurjar.github.io/sitemap.xml
