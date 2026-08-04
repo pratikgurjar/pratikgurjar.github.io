@@ -1,4 +1,4 @@
-import{r as C,p as D,j as N}from"./index-BLDcnZu_.js";const P={top:245,about:243,experience:254,project:264,skills:234,recognition:248,certifications:252,writing:258,contact:272},G=`
+import{r as C,p as D,j as N}from"./index-Bd1gNHzu.js";const P={top:245,about:243,experience:254,project:264,skills:234,recognition:248,certifications:252,writing:258,contact:272},G=`
 attribute vec2 p;
 void main() { gl_Position = vec4(p, 0.0, 1.0); }
 `,O=`

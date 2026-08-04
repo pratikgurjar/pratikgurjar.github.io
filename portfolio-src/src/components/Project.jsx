@@ -223,6 +223,16 @@ export default function Project() {
               </span>
             ))}
           </div>
+          {project.github && (
+            <a
+              className="btn btn-ghost project-link"
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on GitHub
+            </a>
+          )}
         </div>
       </div>
     </section>

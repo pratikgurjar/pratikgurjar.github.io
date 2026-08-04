@@ -65,7 +65,7 @@ export const project = {
     { name: 'Read-only transaction', detail: 'Queries execute inside a read-only transaction' },
     { name: 'Statement timeout', detail: 'A hard timeout bounds every execution' },
   ],
-  github: null,
+  github: 'https://github.com/pratikgurjar/TableTalk',
 }
 
 // Chips link to the official home or primary docs. Links verified 1 Aug 2026.
