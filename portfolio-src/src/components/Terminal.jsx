@@ -19,13 +19,13 @@ const AI = `applied AI, the practical kind:
               and a statement timeout before anything runs
   platform    agent-skills and integration-test scoping for an
               authentication service
-  daily kit   Claude, Ollama, Gemini · MLOps · model deployment
+  AI/ML       Claude, OpenAI, Gemini · MLOps · model deployment
 
 rule of thumb: let the model write, never let it run unguarded.`
 
 const WHOAMI = `${identity.name.toLowerCase().replace(' ', '.')}
 backend engineer, payments infrastructure
-currently: card payments at razorpay (tokenization, 3-D Secure, routing)
+experience: card payments at razorpay (tokenization, 3-D Secure, routing)
 location: ${identity.location.toLowerCase()}`
 
 const ISO = `> parsing ISO 8583 message…

@@ -1,6 +1,6 @@
 # pratikgurjar.github.io
 
-Portfolio of Pratik Gurjar, backend engineer working on card payments infrastructure. Live at [pratikgurjar.github.io](https://pratikgurjar.github.io/).
+Portfolio of Pratik Gurjar, backend engineer with experience in card payments infrastructure. Live at [pratikgurjar.github.io](https://pratikgurjar.github.io/).
 
 The site tells one story: a payment moving through its lifecycle. Scrolling advances a pulse down a rail through seven stations, INITIATE to SETTLED, and every layer of the page plays along.
 

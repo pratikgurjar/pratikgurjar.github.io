@@ -1,9 +1,9 @@
 # 03. Content and data
 
-## One file holds all the text
+## Career content in one file
 
-`src/data.js` (164 lines) holds every piece of text on the page. No text is
-hard-coded inside components.
+`src/data.js` holds career details, projects, skills, recognition, and
+certifications. Some interface copy lives in components and metadata.
 
 **Why:** to change your job title or add a skill, you edit one file. You never
 touch layout or animation code.
@@ -15,20 +15,18 @@ touch layout or animation code.
 | `identity` | object | Name, eyebrow line, availability, location, email, GitHub URL, LinkedIn URL, resume path |
 | `about` | array of 3 strings | The three About paragraphs |
 | `experience` | array of 2 objects | Razorpay and Resultant: company, role, dates, context line, tech chips, bullet points, how many bullets to show before "+ more" |
-| `project` | object | TableTalk: name, strap line, tech stack, summary, the three guard layers |
+| `projects` | array of 2 objects | TableTalk and Switchboard: names, stack, summaries, and key points |
 | `skills` | array of 6 objects | Six groups, each with items. Each item has a name and a documentation URL (or null) |
 | `recognition` | array of 3 objects | Degree, exam ranks, competition win |
-| `certifications` | array of 2 objects | Scaler DSA, Coursera containers |
+| `certifications` | array of 2 objects | AWS Generative AI Developer Advanced, IBM containers |
 
 ## Source of the content
 
-All content comes from the resume file:
-`~/Downloads/Resume Latest/Pratik_Gurjar_Resume.docx`
+Career content follows the latest `Pratik_Gurjar_Resume.pdf`.
 
-Rules followed:
-- No number appears on the site that is not in the resume
-- No claim appears that is not in the resume
-- Company names appear only in the Experience section (facts of employment)
+Career-content rules:
+- Career metrics and claims follow the resume
+- Decorative transaction examples are synthetic, not resume claims
 - The Hero and About sections describe the work without naming employers or banks
 
 ## Skill chip links
@@ -50,9 +48,7 @@ different way), and Kafka's main page timed out once (verified on retry).
 
 ## Resume PDF
 
-`public/Pratik_Gurjar_Resume.pdf` (83.2 KB) is served by the "View resume"
-button. It was created by converting the `.docx` using Apple Pages, because
-Microsoft Word is not installed on this machine.
+`public/Pratik_Gurjar_Resume.pdf` is served by the "View resume" button.
 
 **Important:** when the resume changes, you must replace this PDF manually. It
 does not update itself.

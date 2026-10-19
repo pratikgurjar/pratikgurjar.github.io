@@ -20,7 +20,7 @@ git add -A && git commit -m "..." && git push   # 4. publish
 export const identity = {
   name: 'Pratik Gurjar',
   eyebrow: 'Backend · Payments infrastructure',
-  availability: 'Open to new roles',
+  availability: 'Immediate Joiner',
   location: 'Indore, India',
   email: 'pratikgurjar66@gmail.com',
   github: 'https://github.com/pratikgurjar',

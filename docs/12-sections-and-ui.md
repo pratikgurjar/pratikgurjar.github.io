@@ -21,7 +21,7 @@ Hero -> About -> Experience -> Project -> Skills
 | Name | Each letter is a separate `<span>` so it can animate individually |
 | Tagline | Key terms are highlighted in brighter text |
 | Buttons | View resume, GitHub, LinkedIn. All are magnetic (see below). |
-| Availability badge | Green pulsing dot, "Open to new roles · Indore, India" |
+| Availability badge | Green pulsing dot, "Immediate Joiner · Indore, India" |
 | SCROLL cue | Anchored to the bottom of the hero, with an animated drip line |
 
 **Interactive typography:** hovering a letter of the name makes it thinner

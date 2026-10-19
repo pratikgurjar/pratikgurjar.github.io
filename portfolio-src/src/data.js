@@ -1,9 +1,9 @@
-// Single source of truth: Pratik_Gurjar_Resume.docx. No numbers or claims beyond it.
+// Career content follows the latest Pratik_Gurjar_Resume.pdf.
 
 export const identity = {
   name: 'Pratik Gurjar',
   eyebrow: 'Backend · Payments infrastructure',
-  availability: 'Open to new roles',
+  availability: 'Immediate Joiner',
   location: 'Indore, India',
   email: 'pratikgurjar66@gmail.com',
   github: 'https://github.com/pratikgurjar',
@@ -12,35 +12,35 @@ export const identity = {
 }
 
 export const about = [
-  'Backend engineer, five years in Java, Spring and Go. Most of that time inside payments infrastructure: card authentication, tokenization, routing and settlement reconciliation. The systems that move money and are not allowed to go down.',
+  'Backend engineer with five years in Java, Spring and Go, including card payments infrastructure: authentication, tokenization, routing and settlement reconciliation. The systems that move money and are not allowed to go down.',
   'I have taken issuer-side products live for multiple banks, run on-call for a multi-service authentication stack, led test-coverage drives held in place by merge gates, and spent a satisfying amount of time making slow batch jobs fast and incidents boring. Before payments, I built claims and benefits platforms used by a national veterans agency.',
-  'Lately that includes applied AI: an LLM agent that turns natural language into SQL that is safe to run against a live database, and agent-tooling work inside the platform I work on. I like problems where correctness is non-negotiable and the interesting part is proving it.',
+  'My projects include an LLM agent that turns natural language into SQL with an AST guard, a read-only transaction and a statement timeout. I also contributed to an internal agent-skills platform. I like problems where correctness is non-negotiable and the interesting part is proving it.',
 ]
 
 export const experience = [
   {
     company: 'Razorpay',
     role: 'Product Development Engineer II',
-    period: 'Jul 2024 to present',
+    period: 'Jul 2024 to Sep 2026',
     context:
       'Card payments in Java, Spring Boot and Go: issuer-side tokenization (TokenHQ) and 3-D Secure (ACS), acquirer-side optimizer.',
     tech: ['Java', 'Spring Boot', 'Go', 'Kubernetes', 'Spinnaker', 'ISO 8583', 'PCI DSS', 'Grafana'],
     bullets: [
       'Owned the EMI rollout on the ACS, taking it live for Yes Bank and staging it for SBI Cards, behind a per-issuer config layer that leaves non-EMI banks untouched.',
       'Fixed a recurring P0 in end-of-day settlement reconciliation by batching per-record Hibernate queries and writes, cutting an 8,000-transaction run from 7-8 minutes to 20 seconds.',
-      'Took a merchant live on Pine Labs card EMI: offer discovery and refund-cap handling in the Go gateway adapter, plus the plan-ingestion diagnosis that unblocked the rollout.',
+      'Took a merchant live on Pine Labs card EMI, building offer discovery and refund-cap handling in the Go gateway adapter.',
       'Built Spinnaker canary and disaster-recovery pipelines for the five-service 3-D Secure stack on Kubernetes across two issuer banks, with cross-region DR failover.',
       'On-call for the 3-D Secure stack: improved monitoring and alerting, wrote the 42-scenario incident runbook covering HSM, BIN lookup and OTP delivery.',
       'Worked across ISO 8583 transaction processing (jPOS) and the Spring Boot REST portals for TokenHQ, onboarding issuer banks to live traffic.',
       'Escalation point for bank production incidents; ran vulnerability remediation and auditor walkthroughs for PCI DSS recertification.',
-      'Led the test-coverage drive across four services from under 26% to over 90%, with a JaCoCo/SonarQube merge gate blocking regressions.',
+      'Led the test-coverage drive across four services from under 26% to over 90%, with code review and a JaCoCo/SonarQube merge gate blocking regressions.',
       'Developed end-to-end test suites for the authentication server and the payment optimizer across five gateways, weighted toward failure paths.',
       'Contributed to the internal agent-skills platform, scoping agent-readiness and integration-test requirements for the 3-D Secure service.',
     ],
     collapsedCount: 5,
   },
   {
-    company: 'Resultant Technologies',
+    company: 'Resultant Technologies Pvt Ltd',
     role: 'Software Engineer',
     period: 'Jul 2021 to Jun 2024',
     context: 'US Dept of Veterans Affairs claims and benefits platforms (VBMS).',
@@ -62,7 +62,7 @@ export const projects = [
     strap: 'Natural language to SQL, made safe to run',
     stack: ['Java 21', 'Spring Boot 3', 'React', 'TypeScript'],
     summary:
-      'A tool-calling LLM agent retrieves the database schema and generates SQL. Three guard layers make the result safe to execute against a live database.',
+      'A tool-calling LLM agent retrieves the database schema and generates SQL. An AST guard, a read-only transaction and a statement timeout protect execution. Covered by 74 tests.',
     points: [
       { name: 'AST guard', detail: 'JSqlParser parses every generated statement before it runs' },
       { name: 'Read-only transaction', detail: 'Queries execute inside a read-only transaction' },
@@ -72,14 +72,14 @@ export const projects = [
   },
   {
     name: 'Switchboard',
-    strap: 'Never pay the expensive model for a cheap question',
-    stack: ['Go', 'React', 'SQLite', 'Prometheus'],
+    strap: 'Cost-optimizing LLM gateway',
+    stack: ['Go', 'React'],
     summary:
-      'An OpenAI-compatible gateway that scores each prompt and routes it to the cheapest model tier that can answer it. Benchmark workloads run 35% below a single-model baseline, and every token is accounted for.',
+      'An OpenAI-compatible gateway in Go routes prompts by complexity to the cheapest capable model tier. A golden-set evaluation measured 40% lower spend at 86% routing accuracy and gates deploys.',
     points: [
-      { name: 'Complexity routing', detail: 'Weighted signals score each prompt and pick a tier' },
-      { name: 'Confidence escalation', detail: 'A hedged cheap answer re-runs on the premium model' },
-      { name: 'Budget caps', detail: 'Per-key spend pressure downgrades routing before the cap' },
+      { name: 'Complexity routing', detail: 'Prompts route to the cheapest capable tier' },
+      { name: 'Measured spend', detail: '40% lower spend on the golden-set evaluation' },
+      { name: 'Deployment gate', detail: 'The evaluation gates deploys at 86% routing accuracy' },
     ],
     github: 'https://github.com/pratikgurjar/switchboard',
   },
@@ -160,7 +160,7 @@ export const skills = [
     items: [
       { name: 'LLM agents', url: null },
       { name: 'Claude', url: 'https://claude.com/' },
-      { name: 'Ollama', url: 'https://ollama.com/' },
+      { name: 'OpenAI', url: 'https://openai.com/' },
       { name: 'Gemini', url: 'https://gemini.google.com/' },
       { name: 'MLOps', url: null },
       { name: 'Model deployment', url: null },
@@ -176,6 +176,6 @@ export const recognition = [
 ]
 
 export const certifications = [
-  { title: 'Data Structures and Algorithms', detail: 'Scaler · 2023' },
-  { title: 'Containers with Docker, Kubernetes and OpenShift', detail: 'Coursera · 2022' },
+  { title: 'AWS Generative AI Developer Advanced', detail: 'AWS · 2026' },
+  { title: 'Containers with Docker, Kubernetes and OpenShift', detail: 'IBM · 2022' },
 ]
